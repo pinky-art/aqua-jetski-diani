@@ -115,36 +115,43 @@
             <div class="container">
                 <p class="section-tag">Packages</p>
                 <h2>Choose the ride that matches your mood.</h2>
+                <p class="packages-note">Tap any package below to open the full booking form with that ride already selected.</p>
                 <div class="pricing-grid">
                     <article class="price-card">
                         <p class="ride-time">15 Minutes</p>
                         <h3>KES 4,500</h3>
                         <p>A quick high-energy ride for a first splash or fast thrill.</p>
+                        <button type="button" class="secondary-button package-book-button" data-package="15 Minutes - KES 4,500" data-duration="15 Minutes">Book This Ride</button>
                     </article>
                     <article class="price-card">
                         <p class="ride-time">20 Minutes</p>
                         <h3>KES 6,000</h3>
                         <p>A little more time to enjoy the water, speed, and beach views.</p>
+                        <button type="button" class="secondary-button package-book-button" data-package="20 Minutes - KES 6,000" data-duration="20 Minutes">Book This Ride</button>
                     </article>
                     <article class="price-card">
                         <p class="ride-time">30 Minutes</p>
                         <h3>KES 7,000</h3>
                         <p>A balanced ride with enough time to enjoy the waves, speed, and coastline.</p>
+                        <button type="button" class="secondary-button package-book-button" data-package="30 Minutes - KES 7,000" data-duration="30 Minutes">Book This Ride</button>
                     </article>
                     <article class="price-card featured-card">
                         <p class="ride-time">1 Hour Inshore</p>
                         <h3>KES 14,000</h3>
                         <p>A fuller coastal ride with more freedom to enjoy the ocean experience.</p>
+                        <button type="button" class="primary-button package-book-button" data-package="1 Hour Inshore - KES 14,000" data-duration="1 Hour Inshore">Book This Ride</button>
                     </article>
                     <article class="price-card">
                         <p class="ride-time">1 Hour Dolphin Tour</p>
                         <h3>KES 17,000</h3>
                         <p>An unforgettable guided ocean ride with a chance to spot dolphins.</p>
+                        <button type="button" class="secondary-button package-book-button" data-package="1 Hour Dolphin Tour - KES 17,000" data-duration="1 Hour Dolphin Tour">Book This Ride</button>
                     </article>
                     <article class="price-card">
                         <p class="ride-time">Chale Island Tour</p>
                         <h3>KES 21,000</h3>
                         <p>A premium adventure ride for guests who want the full scenic experience.</p>
+                        <button type="button" class="secondary-button package-book-button" data-package="Chale Island Tour - KES 21,000" data-duration="Chale Island Tour">Book This Ride</button>
                     </article>
                 </div>
             </div>
@@ -364,7 +371,7 @@
                     </label>
                     <label>
                         <span>Choose a Ride</span>
-                        <select name="package" required>
+                        <select name="package" id="booking-package" required>
                             <option value="">Select a package</option>
                             <option value="15 Minutes - KES 4,500">15 Minutes - KES 4,500</option>
                             <option value="20 Minutes - KES 6,000">20 Minutes - KES 6,000</option>
@@ -387,7 +394,7 @@
                     <div class="form-grid">
                         <label>
                             <span>Minutes / Tour</span>
-                            <input type="text" name="duration" placeholder="e.g. 20 minutes" required>
+                            <input type="text" name="duration" id="booking-duration" placeholder="e.g. 20 minutes" required>
                         </label>
                         <label>
                             <span>Number of Guests</span>
@@ -453,6 +460,9 @@
             const form = document.getElementById("booking-form");
             const bookingEmail = "aquajetskidiani@gmail.com";
             const copyButtons = document.querySelectorAll(".copy-button");
+            const packageButtons = document.querySelectorAll(".package-book-button");
+            const packageSelect = document.getElementById("booking-package");
+            const durationInput = document.getElementById("booking-duration");
 
             copyButtons.forEach(function (button) {
                 button.addEventListener("click", async function () {
@@ -473,6 +483,31 @@
             if (!form) {
                 return;
             }
+
+            packageButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    const selectedPackage = button.getAttribute("data-package") || "";
+                    const selectedDuration = button.getAttribute("data-duration") || "";
+
+                    if (packageSelect && selectedPackage) {
+                        packageSelect.value = selectedPackage;
+                    }
+
+                    if (durationInput && selectedDuration) {
+                        durationInput.value = selectedDuration;
+                    }
+
+                    form.scrollIntoView({ behavior: "smooth", block: "start" });
+
+                    window.setTimeout(function () {
+                        const firstInput = form.querySelector("input[name='name']");
+
+                        if (firstInput) {
+                            firstInput.focus({ preventScroll: true });
+                        }
+                    }, 350);
+                });
+            });
 
             form.addEventListener("submit", function (event) {
                 event.preventDefault();
