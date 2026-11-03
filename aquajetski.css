@@ -68,11 +68,8 @@ img {
 }
 
 .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    backdrop-filter: blur(18px);
-    background: rgba(245, 251, 255, 0.82);
+    position: static;
+    background: #f5fbff;
     border-bottom: 1px solid rgba(12, 41, 64, 0.06);
     box-shadow: 0 10px 24px rgba(6, 52, 83, 0.06);
 }
